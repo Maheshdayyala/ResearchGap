@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}History · ResearchGapAI{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Your workspace</p>
+  <h1>Analysis history</h1>
+  <p class="lede">Reopen a saved analysis to view its papers, knowledge map, candidate gaps, novelty evidence, experiment plan, agent execution summary and conversation.</p>
+</section>
+<table class="hist" id="hist"><thead><tr><th>Research topic</th><th>Status</th><th>Started</th><th>Analysis</th></tr></thead><tbody></tbody></table>
+<p id="empty" class="muted" hidden>No analyses saved yet. <a href="{{ url_for('index') }}">Start a new analysis.</a></p>
+<p id="hist-error" class="error" hidden></p>
+{% endblock %}

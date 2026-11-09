@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Main research search section -->
+<section class="search-panel" id="hero">
+
+    <div class="search-heading">
+        <div>
+            <p class="eyebrow">Start an analysis</p>
+            <h2>What would you like to investigate?</h2>
+        </div>
+        <span class="search-tag">TOPIC / KEYWORDS</span>
+    </div>
+
+    <!-- Research query form -->
+    <form id="run" class="query">
+        <label class="sr-only" for="q">
+            Research topic or keywords
+        </label>
+
+        <input
+            id="q"
+            type="text"
+            maxlength="200"
+            required
+            placeholder="Enter a research area, problem statement, or a few focused keywords…"
+            aria-label="Research topic or keywords"
+        >
+
+        <button class="primary" id="go" type="submit">
+            <span>Discover research gaps</span>
+            <span aria-hidden="true">↗</span>
+        </button>
+    </form>
+
+    <p class="hint">
+        For stronger results, include a research task, technique,
+        dataset, or application domain.
+    </p>
+
+    <!-- Example research topics -->
+    <div class="examples" aria-label="Example research topics">
+
+        <div class="examples-head">
+            <p class="examples-label">Explore example research topics</p>
+            <span>SELECT TO INSERT</span>
+        </div>
+
+        <div class="topic-list">
+
+            <button type="button" class="topic-chip"
+                data-topic="Federated learning for ICU mortality prediction under hospital data heterogeneity">
+                <span class="topic-icon">FL</span>
+                Federated learning · ICU prediction
+            </button>
+
+            <button type="button" class="topic-chip"
+                data-topic="Explainable deep learning for diabetic retinopathy screening in low-resource settings">
+                <span class="topic-icon">XAI</span>
+                Explainable AI · healthcare
+            </button>
+
+            <button type="button" class="topic-chip"
+                data-topic="LLM-generated scientific citations and automated verification of citation faithfulness">
+                <span class="topic-icon">LLM</span>
+                Citation verification
+            </button>
+
+            <button type="button" class="topic-chip"
+                data-topic="Multi-agent cyber threat hunting using provenance graphs and explainable alert prioritization">
+                <span class="topic-icon">CY</span>
+                Multi-agent cyber threat hunting
+            </button>
+
+            <button type="button" class="topic-chip"
+                data-topic="Road damage detection under low-light and adverse weather conditions using lightweight vision transformers">
+                <span class="topic-icon">CV</span>
+                Road damage · adverse weather
+            </button>
+
+            <button type="button" class="topic-chip"
+                data-topic="Privacy-preserving cryptocurrency transaction tracing with graph neural networks">
+                <span class="topic-icon">GNN</span>
+                Cryptocurrency tracing · graph ML
+            </button>
+
+        </div>
+    </div>
+
+    <p id="err" class="error" role="alert" hidden></p>
+
+</section>
+
+
+<!-- Analysis progress -->
+<section id="progress" hidden>
+
+    <ol class="track" id="track">
+        <li data-s="search">Search</li>
+        <li data-s="understand">Read</li>
+        <li data-s="graph">Map</li>
+        <li data-s="gaps">Find gaps</li>
+        <li data-s="novelty">Prior-art check</li>
+        <li data-s="plan">Plan</li>
+        <li data-s="report">Report</li>
+    </ol>
+
+    <p id="msg" class="muted" aria-live="polite"></p>
+
+</section>
+
+
+<!-- Analysis results -->
+<section id="result" hidden>
+
+    <header class="rhead">
+
+        <div>
+            <p class="eyebrow">Analysis</p>
+            <h2 id="rtitle"></h2>
+        </div>
+
+        <div id="chips" class="chips"></div>
+
+    </header>
+
+    <div id="warn"></div>
+
+    <!-- Result navigation -->
+    <div class="tabs" role="tablist">
+
+        <button role="tab" data-t="gap" class="on">
+            Recommended gap
+        </button>
+
+        <button role="tab" data-t="plan">
+            Experiment plan
+        </button>
+
+        <button role="tab" data-t="cands">
+            All candidates
+        </button>
+
+        <button role="tab" data-t="papers">
+            Papers
+        </button>
+
+        <button role="tab" data-t="graph">
+            Knowledge graph
+        </button>
+
+        <button role="tab" data-t="evaluation">
+            Agent evaluation
+        </button>
+
+        <button role="tab" data-t="report">
+            Full report
+        </button>
+
+        <button role="tab" data-t="chat">
+            Ask assistant
+        </button>
+
+    </div>
+
+    <!-- Recommended research gap -->
+    <div id="pane-gap" class="pane"></div>
+
+    <!-- Experiment plan -->
+    <div id="pane-plan" class="pane" hidden></div>
+
+    <!-- Candidate gaps -->
+    <div id="pane-cands" class="pane" hidden></div>
+
+    <!-- Retrieved papers -->
+    <div id="pane-papers" class="pane" hidden></div>
+
+    <div id="pane-graph" class="pane" hidden></div>
+
+    <div id="pane-evaluation" class="pane" hidden></div>
+
+    <!-- Complete research report -->
+    <div id="pane-report" class="pane prose" hidden></div>
+
+    <!-- Research assistant -->
+    <div id="pane-chat" class="pane" hidden>
+
+        <h3>Research assistant</h3>
+
+        <p class="muted">
+            Ask follow-up questions about this saved analysis.
+            Answers are grounded in its papers, gaps, novelty evidence
+            and experiment plan.
+        </p>
+
+        <div
+            id="chat-messages"
+            class="chat-messages"
+            aria-live="polite">
+        </div>
+
+        <form id="chat-form" class="chat-form">
+
+            <input
+                id="chat-input"
+                maxlength="2000"
+                required
+                placeholder="Ask a question about this analysis…"
+            >
+
+            <button class="primary" type="submit">
+                Send
+            </button>
+
+        </form>
+
+        <p id="chat-error" class="error" hidden></p>
+
+    </div>
+
+    <!-- Download report -->
+    <p>
+        <a id="dl" class="link" href="#">
+            Download report (.md)
+        </a>
+    </p>
+
+</section>
+
+{% endblock %}
